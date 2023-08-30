@@ -35,7 +35,7 @@ public class EstatisticasService {
             BigDecimal distancia = valor.subtract(media).abs();
             somatoria = somatoria.add(distancia.pow(2));
         }
-        desvio = somatoria.divide(BigDecimal.valueOf(valores.size()-1), RoundingMode.CEILING).round(new MathContext(10));
+        desvio = somatoria.divide(BigDecimal.valueOf(valores.size()), RoundingMode.CEILING).round(new MathContext(10));
         MathContext mc
                 = new MathContext(10);
 
