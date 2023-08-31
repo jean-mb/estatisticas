@@ -18,13 +18,24 @@ public class EstatisticasService {
         Double media = calculaMedia(valores, soma);
         Double mediana = calculaMediana(valores);
         Double desvio = calculaDesvio(valores, media);
+        Double maximo = calculaMaximo(valores);
+        Double minimo = calculaMinimo(valores);
 
         estatistica.setMediana(mediana);
         estatistica.setMedia(media);
         estatistica.setQuantidade_dados_fornecidos(qntd);
         estatistica.setDesvio_padrao(desvio);
+        estatistica.setMaximo(maximo);
+        estatistica.setMinimo(minimo);
 
         return estatistica;
+    }
+
+    private Double calculaMaximo(List<Double> valores) {
+        return Collections.max(valores);
+    }
+    private Double calculaMinimo(List<Double> valores) {
+        return Collections.min(valores);
     }
 
     public Double calculaDesvio(List<Double> valores, Double media) {
@@ -48,11 +59,11 @@ public class EstatisticasService {
         double mediana;
         int meio = (int) Math.floor(qntd/2);
         if(qntd%2!=0){
-            mediana = valores.get(meio);
+            mediana = valores.get((int) meio);
         }else{
-            mediana = valores.get(meio-1) + (valores.get(meio) / 2);
+            mediana = (valores.get((meio-1)) + valores.get(meio)) / 2;
         }
-        return (double) Math.round(mediana);
+        return mediana;
     }
 
     public Double calculaSoma(List<Double> valores) {

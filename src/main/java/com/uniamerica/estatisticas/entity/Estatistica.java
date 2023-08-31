@@ -13,4 +13,6 @@ public class Estatistica {
     private Double desvio_padrao;
     private Double mediana;
     private Double quantidade_dados_fornecidos;
+    private Double maximo;
+    private Double minimo;
 }
