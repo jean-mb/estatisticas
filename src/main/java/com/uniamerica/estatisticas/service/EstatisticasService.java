@@ -12,12 +12,12 @@ import java.util.List;
 @Service
 public class EstatisticasService {
     public Estatistica calculaTodos(Estatistica estatistica) {
-        final List<BigDecimal> valores =estatistica.getValores() ;
-        BigDecimal qntd = BigDecimal.valueOf(valores.size());
-        BigDecimal soma = calculaSoma(valores);
-        BigDecimal media = calculaMedia(valores, soma);
-        BigDecimal mediana = calculaMediana(valores);
-        BigDecimal desvio = calculaDesvio(valores, media);
+        final List<Double> valores =estatistica.getValores() ;
+        Double qntd = (double) valores.size();
+        Double soma = calculaSoma(valores);
+        Double media = calculaMedia(valores, soma);
+        Double mediana = calculaMediana(valores);
+        Double desvio = calculaDesvio(valores, media);
 
         estatistica.setMediana(mediana);
         estatistica.setMedia(media);
@@ -27,45 +27,45 @@ public class EstatisticasService {
         return estatistica;
     }
 
-    private BigDecimal calculaDesvio(List<BigDecimal> valores, BigDecimal media) {
-        BigDecimal desvio;
-        BigDecimal somatoria = BigDecimal.valueOf(0);
-        for (BigDecimal valor:
+    public Double calculaDesvio(List<Double> valores, Double media) {
+        double desvio;
+        double somatoria =  0;
+        for (Double valor:
              valores) {
-            BigDecimal distancia = valor.subtract(media).abs();
-            somatoria = somatoria.add(distancia.pow(2));
+            Double distancia = Math.abs(valor - media);
+            somatoria += distancia * distancia;
         }
-        desvio = somatoria.divide(BigDecimal.valueOf(valores.size()), RoundingMode.CEILING).round(new MathContext(10));
+        desvio = somatoria / valores.size();
         MathContext mc
                 = new MathContext(10);
 
-        return desvio.sqrt(mc).round(new MathContext(10));
+        return Math.sqrt(desvio);
     }
 
-    private BigDecimal calculaMediana(List<BigDecimal> valores) {
+    public Double calculaMediana(List<Double> valores) {
         Collections.sort(valores);
         double qntd = valores.size();
-        BigDecimal mediana;
+        double mediana;
         int meio = (int) Math.floor(qntd/2);
         if(qntd%2!=0){
             mediana = valores.get(meio);
         }else{
-            mediana = valores.get(meio-1).add(valores.get(meio)).divide(BigDecimal.valueOf(2));
+            mediana = valores.get(meio-1) + (valores.get(meio) / 2);
         }
-        return mediana.round(new MathContext(10));
+        return (double) Math.round(mediana);
     }
 
-    private BigDecimal calculaSoma(List<BigDecimal> valores) {
-        BigDecimal soma = BigDecimal.valueOf(0);
-        for (BigDecimal valor:
+    public Double calculaSoma(List<Double> valores) {
+        Double soma = (double) 0;
+        for (Double valor:
                 valores) {
-            soma = soma.add(valor);
+            soma += valor;
         }
         return soma;
     }
 
-    public BigDecimal calculaMedia(List<BigDecimal> valores, BigDecimal soma){
+    public Double calculaMedia(List<Double> valores, Double soma){
 
-        return soma.divide(BigDecimal.valueOf(valores.size()), RoundingMode.CEILING).round(new MathContext(10));
+        return soma / valores.size();
     }
 }

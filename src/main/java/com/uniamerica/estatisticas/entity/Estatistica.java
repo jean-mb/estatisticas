@@ -8,9 +8,9 @@ import java.math.BigDecimal;
 import java.util.List;
 @Data
 public class Estatistica {
-    private List<BigDecimal> valores;
-    private BigDecimal media;
-    private BigDecimal desvio_padrao;
-    private BigDecimal mediana;
-    private BigDecimal quantidade_dados_fornecidos;
+    private List<Double> valores;
+    private Double media;
+    private Double desvio_padrao;
+    private Double mediana;
+    private Double quantidade_dados_fornecidos;
 }
